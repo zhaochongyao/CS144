@@ -19,7 +19,6 @@ add_test(NAME t_send_window          COMMAND send_window)
 add_test(NAME t_send_ack             COMMAND send_ack)
 add_test(NAME t_send_close           COMMAND send_close)
 
-add_test(NAME t_strm_reassem_cap         COMMAND fsm_stream_reassembler_cap)
 add_test(NAME t_strm_reassem_single      COMMAND fsm_stream_reassembler_single)
 add_test(NAME t_strm_reassem_seq         COMMAND fsm_stream_reassembler_seq)
 add_test(NAME t_strm_reassem_dup         COMMAND fsm_stream_reassembler_dup)
@@ -36,24 +35,20 @@ add_test(NAME t_byte_stream_many_writes  COMMAND byte_stream_many_writes)
 
 add_test(NAME t_webget               COMMAND "${PROJECT_SOURCE_DIR}/tests/webget_t.sh")
 
-add_test(NAME arp_network_interface    COMMAND net_interface)
-
-add_test(NAME router_test    COMMAND network_simulator)
-
 add_test(NAME t_tcp_parser           COMMAND tcp_parser "${PROJECT_SOURCE_DIR}/tests/ipv4_parser.data")
 add_test(NAME t_ipv4_parser          COMMAND ipv4_parser "${PROJECT_SOURCE_DIR}/tests/ipv4_parser.data")
 add_test(NAME t_active_close         COMMAND fsm_active_close)
 add_test(NAME t_passive_close        COMMAND fsm_passive_close)
-#add_test(NAME ec_ack_rst             COMMAND fsm_ack_rst)
+add_test(NAME ec_ack_rst             COMMAND fsm_ack_rst)
 add_test(NAME t_ack_rst              COMMAND fsm_ack_rst_relaxed)
-#add_test(NAME ec_ack_rst_win         COMMAND fsm_ack_rst_win)
+add_test(NAME ec_ack_rst_win         COMMAND fsm_ack_rst_win)
 add_test(NAME t_ack_rst_win          COMMAND fsm_ack_rst_win_relaxed)
-#add_test(NAME ec_connect             COMMAND fsm_connect)
+add_test(NAME ec_connect             COMMAND fsm_connect)
 add_test(NAME t_connect              COMMAND fsm_connect_relaxed)
-#add_test(NAME ec_listen              COMMAND fsm_listen)
+add_test(NAME ec_listen              COMMAND fsm_listen)
 add_test(NAME t_listen               COMMAND fsm_listen_relaxed)
 add_test(NAME t_winsize              COMMAND fsm_winsize)
-#add_test(NAME ec_retx                COMMAND fsm_retx)
+add_test(NAME ec_retx                COMMAND fsm_retx)
 add_test(NAME t_retx                 COMMAND fsm_retx_relaxed)
 add_test(NAME t_retx_win             COMMAND fsm_retx_win)
 add_test(NAME t_loopback             COMMAND fsm_loopback)
@@ -222,14 +217,8 @@ add_custom_target (check_lab3 COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
                               COMMENT "Testing the TCP sender...")
 add_custom_target (check_lab4 COMMAND "${PROJECT_SOURCE_DIR}/tun.sh" check 144 145
                               COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure --timeout 10 -R "^t_"
-                              COMMENT "Testing the TCP connection...")
-add_custom_target (check_lab5 COMMAND "${PROJECT_SOURCE_DIR}/tap.sh" check 10
-                              COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure --timeout 10 -R '^t_webget|^arp_'
-                              COMMENT "Testing Lab 5...")
-add_custom_target (check_lab6 COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure --timeout 10 -R '^arp_|^router_'
-                              COMMENT "Testing Lab 6...")
+                              COMMENT "Testing libsponge...")
 
 add_custom_target (check COMMAND "${PROJECT_SOURCE_DIR}/tun.sh" check 144 145
-                         COMMAND "${PROJECT_SOURCE_DIR}/tap.sh" check 10
-                         COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure --timeout 10 -R '^t_|^arp_|^router_'
+                         COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure --timeout 10 -R "^t_"
                          COMMENT "Testing libsponge...")
